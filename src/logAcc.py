@@ -21,7 +21,7 @@ import serial
 # global variables
 MAX_MEAS = 200  # max number of readings in the session, so that we don't create an infinite loop
 AVG_MEAS = 25  # for each reading, take this many measurements and average them
-SER_PORT = 'COM4'  # serial port the device is connected to
+SER_PORT = '/dev/cu.usbmodem119831401'  # serial port the device is connected to
 SER_BAUD = 115200  # serial port baud rate
 FILENAME = os.path.join(os.getcwd(), 'acceldata.txt')  # output file
 
@@ -33,7 +33,7 @@ class SerialPort:
         read(**kwargs): Read and decode data string from serial port.
     """
 
-    def __init__(self, port, baud=9600):
+    def __init__(self, port, baud=SER_BAUD):
         """Create and read serial data.
 
         Args:
@@ -66,9 +66,10 @@ class SerialPort:
             (str): utf-8 decoded message.
         """
         self.ser.flushInput()
+        self.ser.readline()
+        
         bytesToRead = self.ser.readline()
         decodedMsg = bytesToRead.decode('utf-8')
-
         if clean_end == True:
             decodedMsg = decodedMsg.rstrip()  # Strip extra chars at the end
 
@@ -91,8 +92,9 @@ def RecordDataPt(ser: SerialPort) -> tuple:
             ax_now = float(data[0])
             ay_now = float(data[1])
             az_now = float(data[2])
-        except:
+        except Exception as e:
             ser.Close()
+            print(e)
             raise SystemExit("[ERROR]: Error reading serial connection.")
         ax += ax_now
         ay += ay_now

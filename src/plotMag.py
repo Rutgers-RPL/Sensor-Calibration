@@ -35,14 +35,14 @@ import matplotlib.pyplot as plt
 
 
 # Define calibration parameters
-A = np.array(   [[0.989575, -0.022220, 0.005152],
-                [-0.022220, 0.989327, 0.022216],
-                [0.005152, 0.022216, 1.045404]])
-b = np.array([28.557458, -39.981060, -27.428035])
+A = np.array(   [[1.235133, -0.021271, -0.033528],
+                [-0.021271, 0.913554, -0.125199],
+                [-0.033528, -0.125199, 0.897734]])
+b = np.array([0.973863, -11.870558, -4.222671])
 
 
 # Read raw data and apply calibration
-rawData = np.genfromtxt('examples/mag-readings.txt', delimiter='\t')  # Read raw measurements
+rawData = np.genfromtxt('mag-readings.txt', delimiter='\t')  # Read raw measurements
 
 N = len(rawData)
 calibData = np.zeros((N, 3), dtype='float')
@@ -53,8 +53,12 @@ for i in range(N):
 
 # Plot XY data
 plt.figure()
-plt.plot(rawData[:, 0], rawData[:, 1], 'b*', label='Raw Meas.')
-plt.plot(calibData[:, 0], calibData[:, 1], 'r*', label='Calibrated Meas.')
+plt.hist((rawData[:, 0]**2 + rawData[:, 1]**2)**0.5, bins=10, color="BLUE")
+plt.hist((calibData[:, 0]**2 + calibData[:, 1]**2)**0.5, bins=10, color="RED", alpha=0.5)
+print(((rawData[:, 0]**2 + rawData[:, 1]**2)**0.5).std())
+print(((calibData[:, 0]**2 + calibData[:, 1]**2)**0.5).std())
+#plt.plot(rawData[:, 0], rawData[:, 1], 'b*', label='Raw Meas.')
+#plt.plot(calibData[:, 0], calibData[:, 1], 'r*', label='Calibrated Meas.')
 plt.title('XY Magnetometer Data')
 plt.xlabel('X [uT]')
 plt.ylabel('Y [uT]')
@@ -64,8 +68,12 @@ plt.axis('equal')
 
 # Plot YZ data
 plt.figure()
-plt.plot(rawData[:, 1], rawData[:, 2], 'b*', label='Raw Meas.')
-plt.plot(calibData[:, 1], calibData[:, 2], 'r*', label='Calibrated Meas.')
+plt.hist((rawData[:, 1]**2 + rawData[:, 2]**2)**0.5, bins=10, color="BLUE")
+plt.hist((calibData[:, 1]**2 + calibData[:, 2]**2)**0.5, bins=10, color="RED", alpha=0.5)
+print(((rawData[:, 1]**2 + rawData[:, 2]**2)**0.5).std())
+print(((calibData[:, 1]**2 + calibData[:, 2]**2)**0.5).std())
+#plt.plot(rawData[:, 1], rawData[:, 2], 'b*', label='Raw Meas.')
+#plt.plot(calibData[:, 1], calibData[:, 2], 'r*', label='Calibrated Meas.')
 plt.title('YZ Magnetometer Data')
 plt.xlabel('Y [uT]')
 plt.ylabel('Z [uT]')
@@ -75,8 +83,12 @@ plt.axis('equal')
 
 # Plot XZ data
 plt.figure()
-plt.plot(rawData[:, 0], rawData[:, 2], 'b*', label='Raw Meas.')
-plt.plot(calibData[:, 0], calibData[:, 2], 'r*', label='Calibrated Meas.')
+plt.hist((rawData[:, 0]**2 + rawData[:, 2]**2)**0.5, bins=10, color="BLUE")
+plt.hist((calibData[:, 0]**2 + calibData[:, 2]**2)**0.5, bins=10, color="RED", alpha=0.5)
+print(((rawData[:, 0]**2 + rawData[:, 2]**2)**0.5).std())
+print(((calibData[:, 0]**2 + calibData[:, 2]**2)**0.5).std())
+#plt.plot(rawData[:, 0], rawData[:, 2], 'b*', label='Raw Meas.')
+#plt.plot(calibData[:, 0], calibData[:, 2], 'r*', label='Calibrated Meas.')
 plt.title('XZ Magnetometer Data')
 plt.xlabel('X [uT]')
 plt.ylabel('Z [uT]')

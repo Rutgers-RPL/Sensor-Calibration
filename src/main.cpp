@@ -4,15 +4,16 @@
 
 Bmi085Accel accel(Wire, 0x18);
 
-DFRobot_BMM150_I2C mag(Wire, 0x13);
+DFRobot_BMM150_I2C mag(&Wire, I2C_ADDRESS_4);
+#define _g_ 9.806
 
 // MAG or ACCEL
-#define log = "MAG"
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
 
-  while (!Serial) {};
+  //while (!Serial) {};
 
   while (mag.begin()) {
     Serial.printf("BMM150 Init Failed, Trying again\n");
@@ -30,22 +31,34 @@ void setup() {
   } //Serial.printf("BMI085 Init Success!");
 
 }
+/*
+void loop()
+{
+  sBmm150MagData_t magData = mag.getGeomagneticData();
+  Serial.print("mag x = "); Serial.print(magData.x); Serial.println(" uT");
+  Serial.print("mag y = "); Serial.print(magData.y); Serial.println(" uT");
+  Serial.print("mag z = "); Serial.print(magData.z); Serial.println(" uT");
+  float compassDegree = mag.getCompassDegree();
+  Serial.print("the angle between the pointing direction and north (counterclockwise) is:");
+  Serial.println(compassDegree);
+  Serial.println("--------------------------------");
+  delay(100);
+}
+*/
 
 void loop() {
   // put your main code here, to run repeatedly:
   accel.readSensor();
   sBmm150MagData_t magData = mag.getGeomagneticData();
 
-  if (log == "ACCEL") {
-    Serial.print(accel.getAccelX_mss, 6); Serial.print(",");
-    Serial.print(accel.getAccelY_mss, 6); Serial.print(",");
-    Serial.println(accel.getAccelZ_mss, 6);
-  } else if (log == "MAG") {
-    Serial.print(magData.x, 6); Serial.print(",");
-    Serial.print(masgData.y, 6); Serial.print(",");
-    Serial.println(magData.z, 6);
+  if (true) {
+    Serial.printf("%f,%f,%f\n", accel.getAccelX_mss()/_g_,accel.getAccelY_mss()/_g_,accel.getAccelZ_mss()/_g_);
+  } else {
+    //Serial.print(magData.x); Serial.print(",");
+    //Serial.print(magData.y); Serial.print(",");
+    //Serial.println(magData.z);
   }
   
-  // 10HZ
-  delay(100);
+  // 100HZ
+  delay(10);
 }

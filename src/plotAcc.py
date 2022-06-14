@@ -30,14 +30,13 @@ import matplotlib.pyplot as plt
 
 
 # Define calibration parameters
-A = np.array([[1.004332, 0.000046, 0.004896],  # 'A^-1' matrix from Magneto
-              [0.000046, 0.969793, 0.009452],
-              [0.004896, 0.009452, 1.022384]])
-# 'Combined bias (b)' vector from Magneto
-b = np.array([0.027031, -0.040204, 0.046558])
+A = np.array(   [[1.089254, -0.011998, 0.042381],
+                [-0.011998, 1.058979, -0.031212],
+                [0.042381, -0.031212, 0.824176]])
+b = np.array([0.067198, 0.089223, 0.035954])
 
 # Read raw data and apply calibration
-rawData = np.genfromtxt('examples/acceldata-example.txt',
+rawData = np.genfromtxt('mag-readings.txt',
                         delimiter='\t')  # raw measurement file
 units = 'G\'s'  # units of accelerometer measurements (used for axis labels)
 

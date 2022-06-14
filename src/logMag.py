@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 
 
 # GLOBAL VARIABLES
-SER_PORT = 'COM3'  # Serial port
+SER_PORT = '/dev/cu.usbmodem119831301'  # Serial port
 SER_BAUD = 115200  # Serial baud rate
 SAMPLE_FREQ = 10  # Frequency to record magnetometer readings at [Hz]
 T_SAMPLE = 30  # Total time to read mangetometer readings [sec]
